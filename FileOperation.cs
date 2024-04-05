@@ -2,7 +2,6 @@
 
 public class FileOperation
 {
-    
    public Dictionary<string, int> GetWordFrequency(string filePath)
     {
         Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
@@ -45,6 +44,7 @@ public class FileOperation
                 }
             }
         }
+        
         catch (IOException e)
         {
             Console.WriteLine($"Stala se nejaka chyba pri nacteni souboru: {e.Message}");
@@ -53,4 +53,7 @@ public class FileOperation
 
         return wordFrequency;
     }
+   
+   
+   
 }
