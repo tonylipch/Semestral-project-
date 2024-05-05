@@ -2,10 +2,12 @@
 using System;
 using System.IO;
 
-
+//Main inteface
 public class Interface
 {
+    //Dictionary which count our words
     private static Dictionary<string, int> wordFrequency;
+    
     private const string menu = "menu.txt";
     
     public  void MenuOperations()
@@ -19,41 +21,41 @@ public class Interface
         {
             //Load menu
             ReadFile(menu);
-            Console.Write("Zvolte prosim cislo: ");
+            Console.Write("Choose operation: ");
             try
             {
                 int choice = int.Parse(Console.ReadLine());
                 
-                
-                
                     switch (choice)
                     {
+                        //[1] Print statistic of words
                         case 1 :
                          
-                           Console.WriteLine("\nNejčastější slova jsou :");
-                           foreach (var pair in wordFrequency.OrderByDescending(pair => pair.Value).Take(10)) // Выводим 10 наиболее часто встречающихся слов
-                           {
-                               Console.WriteLine($"{pair.Key}: {pair.Value} krat");
-                           }
-
-                        
+                            Console.WriteLine("\nThe most popular words are :");
+                            foreach (var pair in wordFrequency.OrderByDescending(pair => pair.Value).Take(10)) // Выводим 10 наиболее часто встречающихся слов
+                            {
+                                Console.WriteLine($"{pair.Key}: {pair.Value} x");
+                            } 
+                            GoBackAction();
                             break;
+                        //[2]  Find specific word
                         case 2:
                         
                             GetWordStatistic();
-                           
+                            GoBackAction();
                             break;
                         
+                        //[3] Open new file
                         case 3:
                             AnalyzeFile();
                             break;
                         
                         default:
                             Console.Clear();
-                            Console.WriteLine("Zadan spatny vyber. Zkuste jeste jednou");
+                            Console.WriteLine("Wrong choice. Please try again");
                             break;
                     }
-                    GoBackAction();
+                  
                     
             }
             catch (FormatException)
@@ -67,29 +69,32 @@ public class Interface
         }
     }
 
-
-public static void AnalyzeFile(){ 
-    Console.WriteLine("Enter path to file: ");
-                           
-
-    string filePath = Console.ReadLine();
-                                    
-    if (!File.Exists(filePath))
-    {
-        Console.WriteLine("File doesn't exist, preass any key");
-        Console.ReadKey();
-        Console.Clear();
+    //Using for reading files with some text
+    public static void AnalyzeFile(){ 
+      
+        Console.WriteLine("Enter path to file: ");
+        string filePath = Console.ReadLine();
+        while (!File.Exists(filePath))
+        {
+           
+            Console.WriteLine("File doesn't exist, preass any key");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("Enter path to file again: ");
+           filePath = Console.ReadLine();
+          
         
-    }else
-    {
-        FileOperation fo = new FileOperation();
-        wordFrequency = fo.GetWordFrequency(filePath);
-                                      
-     
+        }
+        if(File.Exists(filePath))
+        {
+            FileOperation fo = new FileOperation();
+            wordFrequency = fo.GetWordFrequency(filePath);
+        }
+        
     }
-        
-}
 
+
+//Find some word and cout frequency of them
 public static void GetWordStatistic()
 {
     Console.WriteLine("Enter the word: ");
@@ -101,10 +106,12 @@ public static void GetWordStatistic()
         return;
     }
 
-    Console.WriteLine($"{word}: {wordFrequency.GetValueOrDefault(word,0)} krat");
+    Console.WriteLine($"{word}: {wordFrequency.GetValueOrDefault(word,0)} x");
     
 }
 
+
+// Read some interface files
 public static void ReadFile(string filename)
     {
         // If it exist
@@ -126,10 +133,14 @@ public static void ReadFile(string filename)
 
     }
 
+
+
     private void GoBackAction( )
     {
-        Console.WriteLine("stlacite [B/b] aby se vratit zpet");
-        string  turnback = Console.ReadLine().ToLower();
+
+  
+        Console.WriteLine("press [B/b] to step back");
+        string turnback = Console.ReadLine().ToLower();
         Console.Clear();
 
         switch (turnback)
@@ -142,7 +153,7 @@ public static void ReadFile(string filename)
             default: 
                 while (turnback != "b")
                 {
-                    Console.WriteLine("Zadan spatny vyber");
+                    Console.WriteLine("Wrong choice! press [B/b] to step back");
                     turnback = Console.ReadLine().ToLower();
                 }
                 Console.Clear();

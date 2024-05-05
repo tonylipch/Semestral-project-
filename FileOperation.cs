@@ -6,15 +6,14 @@ public class FileOperation
     {
         Dictionary<string, int> wordFrequency = new Dictionary<string, int>();
 
+        //Words which program doesn't count
         HashSet<string> excludedWords = new HashSet<string>
-                {"a","i","tak", "aby", 
-                    "nebo", "aby","jen",
-                    "u", "po", "nad",
-                    "pod", "ve", "v", "za",
-                    "do", "na", "ze", "o",
-                    "však","čímž","iž","s",
-                    "se","si"
-                    
+                {"and","but","or", "also", 
+                    "since", "because","if",
+                    "although", "when", "where",
+                    "so that", "while", "after", "before",
+                    "nevertheless", "therefore", "in", "on",
+                    "to","if","a"
                 };
 
         try
@@ -47,7 +46,7 @@ public class FileOperation
         
         catch (IOException e)
         {
-            Console.WriteLine($"Stala se nejaka chyba pri nacteni souboru: {e.Message}");
+            Console.WriteLine($"Something wrong with reading file: {e.Message}");
        
         }
 
